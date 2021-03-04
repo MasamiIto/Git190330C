@@ -1,0 +1,187 @@
+influx -import -path=j.txt -precision=s -database=mydb1
+
+CREATE DATABASE myDB
+show DATABASES
+use myDB
+INSERT dev1,tag=DEVICE dat0001=1 dat0002=12
+INSERT dev1,tag=DEVICE dat0001=1,dat0002=12
+INSERT dev1,tag=MACHINE dat0001=1,dat0002=12
+INSERT dev1,tag=MACHINE dat0001=1,dat0002=13
+INSERT dev1,tag=MACHINE dat0001=1,dat0002=14
+
+select dat0001,dat0002  from dev1 WHERE "tag"='DEVICE'
+select dat0001,dat0002  from dev1 WHERE "tag"='MACHINE'
+
+
+
+DATABASE-------------------------
+CREATE DATABASE myDB
+show DATABASES
+use myDB
+DELETE DATABASE mydb1
+
+MEASUREMENT--------------------
+show MEASUREMENTS
+
+precision rfc3339
+select * from average_temperature limit 10
+
+
+~
+~
+~
+"IMPORTDB.sh" 28L, 655C   
+--------------------------------------------------------[] 
+                                                                                                         28,0-1       全て
+from datetime import datetime
+import time
+
+if __name__ == '__main__':
+
+    now_ts = datetime.now()
+    ts = int(now_ts.timestamp() )
+    for i in range(1, 10):
+        print(f'sample,type={i} value={i} {ts}')
+        ts = ts - (60 * 60 * 24  )
+
+    now2 = datetime.now()
+    print(now2, ":",now2.date(),now2.time())
+    print(now2, ":",now2.hour,now2.minute)
+    print( now2.strftime("%Y/%m/%d %H:%M:%S"))
+    print( "{0:%Y-%m-%d %H:%M:%S}".format(now2))
+
+    dt =datetime(2013, 1, 1, 20, 29, 39)
+    print(dt)
+-----------------------------------------------------------------------
+~from datetime import datetime
+import time
+
+if __name__ == '__main__':
+
+    print("# DDL" )
+    print("")
+    print("CREATE DATABASE mydb1")
+    print("")
+    print("# DML")
+    print("")
+    print("# CONTEXT-DATABASE: mydb1")
+
+    dt =datetime(2013, 1, 1, 20, 29, 39)
+#    now_ts = datetime.now()
+    ts = int(dt.timestamp() )
+#    ts = int(now_ts.timestamp() )
+    dt1=1
+    dt2=1
+    for i in range(1, 10):
+        print(f'device_1,type={dt1} value={dt2} {ts}')
+        ts = ts + (60 * 60 * 24  )
+        dt1=dt1+100
+        dt2=dt2+200
+
+"NOAA_data.txt" 76298L, 5076764C                                                                                                    1,1          先頭
+# DDL
+
+CREATE DATABASE mydb1
+
+# DML
+
+# CONTEXT-DATABASE: mydb1
+
+h2o_feet,location=coyote_creek water_level=8.120,level\ description="between 6 and 9 feet" 1566000000
+h2o_feet,location=coyote_creek water_level=8.005,level\ description="between 6 and 9 feet" 1566000360
+h2o_feet,location=coyote_creek water_level=7.887,level\ description="between 6 and 9 feet" 1566000720
+h2o_feet,location=coyote_creek water_level=7.762,level\ description="between 6 and 9 feet" 1566001080
+h2o_feet,location=coyote_creek water_level=7.635,level\ description="between 6 and 9 feet" 1566001440
+h2o_feet,location=coyote_creek water_level=7.500,level\ description="between 6 and 9 feet" 1566001800
+h2o_feet,location=coyote_creek water_level=7.372,level\ description="between 6 and 9 feet" 1566002160
+h2o_feet,location=coyote_creek water_level=7.234,level\ description="between 6 and 9 feet" 1566002520
+h2o_feet,location=coyote_creek water_level=7.110,level\ description="between 6 and 9 feet" 1566002880
+h2o_feet,location=coyote_creek water_level=6.982,level\ description="between 6 and 9 feet" 1566003240
+h2o_feet,location=coyote_creek water_level=6.837,level\ description="between 6 and 9 feet" 1566003600
+h2o_feet,location=coyote_creek water_level=6.713,level\ description="between 6 and 9 feet" 1566003960
+h2o_feet,location=coyote_creek water_level=6.578,level\ description="between 6 and 9 feet" 1566004320
+
+
+
+~
+~asami@masami-VirtualBox:~/TEST_MQTT$ cat pub.py
+#!usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import paho.mqtt.client as mqtt     # MQTTのライブラリをインポート
+from time import sleep              # 3秒間のウェイトのために使う
+
+# ブローカーに接続できたときの処理
+def on_connect(client, userdata, flag, rc):
+    print("Connected with result code " + str(rc))
+
+# ブローカーが切断したときの処理
+def on_disconnect(client, userdata, flag, rc):
+    if rc != 0:
+        print("Unexpected disconnection.")
+
+# publishが完了したときの処理
+def on_publish(client, userdata, mid):
+    print("publish: {0}".format(mid))
+
+# メイン関数   この関数は末尾のif文から呼び出される
+def main():
+    client = mqtt.Client()                 # クラスのインスタンス(実体)の作成
+    client.on_connect = on_connect         # 接続時のコールバック関数を登録
+    client.on_disconnect = on_disconnect   # 切断時のコールバックを登録
+    client.on_publish = on_publish         # メッセージ送信時のコールバック
+
+    client.connect("localhost", 1883, 60)  # 接続先は自分自身
+
+  # 通信処理スタート
+    client.loop_start()    # subはloop_forever()だが，pubはloop_start()で起動だけさせる
+
+  # 永久に繰り返す
+    while True:
+      client.publish("drone/001","Hello, Drone!")    # トピック名とメッセージを決めて送信
+      sleep(3)   # 3秒待つ
+
+if __name__ == '__main__':          # importされないときだけmain()を呼ぶ
+    main()    # メイン関数を呼び出す
+masami@masami-VirtualBox:~/TEST_MQTT$
+
+
+masami@masami-VirtualBox:~/TEST_MQTT$ cat sub.py
+#!usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import paho.mqtt.client as mqtt     # MQTTのライブラリをインポート
+
+# ブローカーに接続できたときの処理
+def on_connect(client, userdata, flag, rc):
+    print("Connected with result code " + str(rc))  # 接続できた旨表示
+    client.subscribe("drone/001")  # subするトピックを設定
+
+# ブローカーが切断したときの処理
+def on_disconnect(client, userdata, flag, rc):
+     if  rc != 0:
+         print("Unexpected disconnection.")
+
+# メッセージが届いたときの処理
+def on_message(client, userdata, msg):
+# msg.topicにトピック名が，msg.payloadに届いたデータ本体が入っている
+    print("Received message '" + str(msg.payload) + "' on topic '" + msg.topic + "' with QoS " + str(msg.qos))
+
+# MQTTの接続設定
+client = mqtt.Client()                 # クラスのインスタンス(実体)の作成
+client.on_connect = on_connect         # 接続時のコールバック関数を登録
+client.on_disconnect = on_disconnect   # 切断時のコールバックを登録
+client.on_message = on_message         # メッセージ到着時のコールバック
+
+client.connect("localhost", 1883, 60)  # 接続先は自分自身
+
+client.loop_forever()                  # 永久ループして待ち続ける
+masami@masami-VirtualBox:~/TEST_MQTT$ ^C
+~
+~
+~
+~
+~
+~
+~
+~
