@@ -1,0 +1,98 @@
+
+C:\tmp>ftp 192.168.99.103
+192.168.99.103 に接続しました。
+vsf_sysutil_getpeername
+vsf_sysutil_getsockname
+vsf_sysutil_unix_stream_socketpair
+priv_sock_get_cmd
+220 (vsFTPd 3.0.3)
+200 Always in UTF8 mode.
+ユーザー (192.168.99.103:(none)): masami
+331 Please specify the password.
+パスワード:
+priv_sock_send_cmd
+priv_sock_send_str
+priv_sock_send_str
+vsf_sysutil_unix_stream_socketpair
+vsf_priv_parent_postlogin
+process_post_login_req
+priv_sock_get_cmd
+230 Login successful.
+ftp> put TEST.txt
+handle_port
+priv_sock_send_cmd
+process_post_login_req:67
+process_post_login_req
+priv_sock_get_cmd
+vsf_sysutil_sockaddr_clone
+vsf_sysutil_sockaddr_set_port
+200 PORT command successful. Consider using PASV.
+
+priv_sock_send_cmd
+process_post_login_req:72
+cmd_process_pasv_active
+    0
+process_post_login_req
+priv_sock_get_cmd
+priv_sock_send_cmd
+process_post_login_req:72
+cmd_process_pasv_active
+    0
+process_post_login_req
+priv_sock_get_cmd
+priv_sock_send_cmd
+process_post_login_req:72
+cmd_process_pasv_active
+    0
+process_post_login_req
+priv_sock_get_cmd
+priv_sock_send_cmd
+process_post_login_req:72
+cmd_process_pasv_active
+    0
+priv_sock_send_cmd
+process_post_login_req
+priv_sock_get_cmd
+process_post_login_req:72
+cmd_process_pasv_active
+    0
+
+■vsf_two_process_get_priv_data_sock
+>priv_sock_send_cmd
+process_post_login_req
+priv_sock_get_cmd
+process_post_login_req:62
+cmd_process_get_data_sock
+vsf_privop_get_ftp_port_sock
+vsf_sysutil_sockaddr_clone
+vsf_sysutil_sockaddr_set_port
+vsf_sysutil_bind
+vsf_sysutil_sockaddr_set_port
+vsf_sysutil_connect_timeout:1775
+   >A
+   >B
+   >connect rc=-1
+   >select rc=1  errn-115
+   >wait rc=60
+   >return rc=0
+vsf_sysutil_connect_timeout:1844
+■150 Ok to send data.
+process_post_login_req
+priv_sock_get_cmd
+226 Transfer complete.
+priv_sock_send_cmd
+process_post_login_req:67
+process_post_login_req
+priv_sock_get_cmd
+ftp: 6366 バイトが送信されました 0.00秒 6366000.00KB/秒。
+ftp> by
+221 Goodbye.
+
+C:\tmp>
+
+
+
+
+
+
+
